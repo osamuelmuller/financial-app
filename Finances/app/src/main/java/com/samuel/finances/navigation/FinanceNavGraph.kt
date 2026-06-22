@@ -9,13 +9,15 @@ import com.samuel.finances.screen.categories.CategoriesScreen
 import com.samuel.finances.screen.history.PurchaseHistoryScreen
 
 @Composable
-fun FinanceNavGraph(navController: NavHostController) {
+fun FinanceNavGraph(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
         startDestination = Screen.Categories.route
     ) {
         composable(Screen.Categories.route) {
-            CategoriesScreen()
+            CategoriesScreen(navController = navController)
         }
 
         composable(Screen.AddPurchase.route) {
