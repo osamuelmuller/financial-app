@@ -13,6 +13,7 @@ import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Category
 
@@ -50,12 +51,17 @@ fun CategoryCard(category: Category) {
             //Progress indicator
             val progress = category.remainingBudget / category.initialBudget
 
+            val progressColor =
+                when {
+                    progress > 0.6 -> Color(0xFF4CAF50)
+                    progress > 0.3 -> Color(0xFFFFC107)
+                    else -> Color (0xFFF44336)
+                }
+            
             LinearProgressIndicator(
             progress = { progress.toFloat().coerceIn(0f, 1f) },
             modifier = Modifier.fillMaxWidth(),
-            color = ProgressIndicatorDefaults.linearColor,
-            trackColor = ProgressIndicatorDefaults.linearTrackColor,
-            strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
+            color = progressColor
             )
         }
     }
