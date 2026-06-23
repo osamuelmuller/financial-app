@@ -14,7 +14,7 @@ fun FinanceNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Categories.route
+        startDestination = Screen.AddPurchase.route
     ) {
         composable(Screen.Categories.route) {
             CategoriesScreen(navController = navController)
