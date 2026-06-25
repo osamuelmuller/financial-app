@@ -1,6 +1,5 @@
 package com.samuel.finances.screen.addpurchase
 
-import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,51 +18,43 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuel.finances.components.DropdownSelector
 import com.samuel.finances.repository.MockCategoryRepository
 import com.samuel.finances.repository.MockPaymentMethodRepository
+import com.samuel.finances.ui.theme.Sizes
+import com.samuel.finances.viewmodel.AddPurchaseViewModel
+import com.samuel.finances.viewmodel.CategoriesViewModel
+import com.samuel.finances.viewmodel.PaymentMethodViewModel
 import java.time.LocalDate
 
 
 @Composable
 fun AddPurchaseScreen() {
-    var description by remember {
-        mutableStateOf("")
-    }
+    val addPurchaseViewModel: AddPurchaseViewModel = viewModel()
+    val categoriesViewModel: CategoriesViewModel = viewModel()
+    val paymentMethodViewModel : PaymentMethodViewModel = viewModel()
 
-    var value by remember {
-        mutableStateOf("")
-    }
+    var description = addPurchaseViewModel.description
 
-    var date by remember {
-        mutableStateOf(
-            LocalDate.now().toString()
-        )
-    }
+    var value = addPurchaseViewModel.value
 
-    val categories =
-        MockCategoryRepository
-            .getCategories()
-            .map {it.name}
+    var date = addPurchaseViewModel.date
 
-    val paymentMethod =
-        MockPaymentMethodRepository
-            .getMethods()
-            .map {it.name}
+    val getCategories = categoriesViewModel.categories.map {it.name}
 
-    var selectedCategory by remember {
-        mutableStateOf(categories.first())
-    }
-    var selectedPaymentMethod by remember {
-        mutableStateOf(paymentMethod.first())
-    }
+    val getPaymentMethods = paymentMethodViewModel.paymentMethods.map {it.name}
+
+    var selectedCategory = categoriesViewModel.categories.first().name
+
+    var selectedPaymentMethod = paymentMethodViewModel.paymentMethods.first().name
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(Sizes.screenPadding),
         verticalArrangement =
-                Arrangement.spacedBy(16.dp)
+                Arrangement.spacedBy(Sizes.spacers)
     ) {
         Text(
             text = "Add Purchase",
@@ -75,7 +66,7 @@ fun AddPurchaseScreen() {
 
         DropdownSelector(
             label = "Category",
-            items = categories,
+            items = getCategories,
             selectedItem = selectedCategory,
             onItemSelected = {
                 selectedCategory = it
@@ -84,7 +75,7 @@ fun AddPurchaseScreen() {
 
         DropdownSelector(
             label = "Payment Method",
-            items = paymentMethod,
+            items = getPaymentMethods,
             selectedItem = selectedPaymentMethod,
             onItemSelected = {
                 selectedPaymentMethod = it
@@ -93,9 +84,7 @@ fun AddPurchaseScreen() {
 
         OutlinedTextField(
             value = date,
-            onValueChange = {
-                date = it
-            },
+            onValueChange = { addPurchaseViewModel.updateDate(it) },
             label = {
                 Text("Date")
             },
@@ -108,9 +97,7 @@ fun AddPurchaseScreen() {
 
         OutlinedTextField(
             value = value,
-            onValueChange = {
-                value = it
-            },
+            onValueChange = { addPurchaseViewModel.updateValue(it) },
             label = {
                 Text("Value")
             },
@@ -123,9 +110,7 @@ fun AddPurchaseScreen() {
 
         OutlinedTextField(
             value = description,
-            onValueChange = {
-                description = it
-            },
+            onValueChange = { addPurchaseViewModel.updateDescription(it) },
             label = {
                 Text("Description")
             },

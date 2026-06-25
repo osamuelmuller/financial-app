@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Purchase
+import com.samuel.finances.ui.theme.Sizes
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -26,14 +27,14 @@ fun PurchaseCard(purchase: Purchase) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 5.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .padding(vertical = Sizes.cardSpacing),
+        elevation = CardDefaults.cardElevation(defaultElevation = Sizes.cardElevation)
     ) {
         val formattedValue = NumberFormat
             .getCurrencyInstance(Locale("pt", "BR"))
             .format(purchase.value)
 
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Sizes.screenPadding)) {
 
             Text(
                 text = purchase.description,

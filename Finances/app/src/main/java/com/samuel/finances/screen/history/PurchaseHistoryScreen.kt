@@ -20,15 +20,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuel.finances.components.FilterSelection
 import com.samuel.finances.components.PurchaseCard
 import com.samuel.finances.repository.MockCategoryRepository
 import com.samuel.finances.repository.MockPaymentMethodRepository
 import com.samuel.finances.repository.MockPurchaseRepository
+import com.samuel.finances.ui.theme.Sizes
+import com.samuel.finances.viewmodel.PurchaseHistoryViewModel
 
 @Composable
 fun PurchaseHistoryScreen() {
-    val purchase = MockPurchaseRepository.getPurchases()
+    val viewModel : PurchaseHistoryViewModel = viewModel()
+    val purchases = viewModel.purchases
 
     val categories = listOf(
         "All"
@@ -65,14 +69,14 @@ fun PurchaseHistoryScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(Sizes.screenPadding)
     ) {
         Text(
             text = "Purchase History",
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Sizes.spacers))
 
         FilterSelection(
             selectedDate = selectedDate,
@@ -92,13 +96,13 @@ fun PurchaseHistoryScreen() {
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Sizes.spacers))
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(Sizes.cardSpacing),
         ) {
-            items(purchase) { purchase ->
-                PurchaseCard(purchase = purchase)
+            items(purchases) { purchases ->
+                PurchaseCard(purchase = purchases)
             }
         }
     }

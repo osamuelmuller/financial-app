@@ -16,25 +16,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Category
+import com.samuel.finances.ui.theme.Sizes
 
 @Composable
 fun CategoryCard(category: Category) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+            .padding(vertical = Sizes.cardSpacing),
+        elevation = CardDefaults.cardElevation(Sizes.cardElevation)
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(Sizes.screenPadding)
         ) {
             Text(
                 text = category.name,
                 style = MaterialTheme.typography.titleMedium
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Sizes.componentSpacing))
 
             Text(
                 text = "Initial Budget: R$ ${category.initialBudget}",
@@ -46,7 +47,7 @@ fun CategoryCard(category: Category) {
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Sizes.componentSpacing))
 
             //Progress indicator
             val progress = category.remainingBudget / category.initialBudget

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Category
 import com.samuel.finances.model.PaymentMethod
+import com.samuel.finances.ui.theme.Sizes
 import java.time.LocalDate
 
 @Composable
@@ -21,7 +22,7 @@ fun FilterSelection (
     onPaymentMethodSelected: (String) -> Unit
     ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Sizes.filterArrangement)
     ) {
         DropdownSelector(
             label = "Date Range",
