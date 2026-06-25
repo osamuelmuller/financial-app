@@ -12,4 +12,10 @@ class CategoriesViewModel : ViewModel() {
 
     val categories = repository.getCategories()
 
+    var selectedCategory by mutableStateOf("")
+        private set
+
+    fun updateCategory(newCategory: String) {
+        selectedCategory = newCategory
+    }
 }

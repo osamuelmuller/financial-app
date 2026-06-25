@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Category
 import com.samuel.finances.ui.theme.Sizes
+import com.samuel.finances.util.toBrazilianCurrency
 
 @Composable
 fun CategoryCard(category: Category) {
@@ -38,12 +39,12 @@ fun CategoryCard(category: Category) {
             Spacer(modifier = Modifier.height(Sizes.componentSpacing))
 
             Text(
-                text = "Initial Budget: R$ ${category.initialBudget}",
+                text = "Initial Budget: ${category.initialBudget.toBrazilianCurrency()}",
                 style = MaterialTheme.typography.bodyMedium
             )
 
             Text(
-                text = "Remaining Budget: R$ ${category.remainingBudget}",
+                text = "Remaining Budget: ${category.remainingBudget.toBrazilianCurrency()}",
                 style = MaterialTheme.typography.bodyMedium
             )
 

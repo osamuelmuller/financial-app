@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.samuel.finances.model.Purchase
 import com.samuel.finances.ui.theme.Sizes
+import com.samuel.finances.util.toBrazilianCurrency
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -30,9 +31,6 @@ fun PurchaseCard(purchase: Purchase) {
             .padding(bottom = Sizes.cardSpacing),
         elevation = CardDefaults.cardElevation(defaultElevation = Sizes.cardElevation)
     ) {
-        val formattedValue = NumberFormat
-            .getCurrencyInstance(Locale("pt", "BR"))
-            .format(purchase.value)
 
         Column(modifier = Modifier.padding(Sizes.screenPadding)) {
 
@@ -41,7 +39,7 @@ fun PurchaseCard(purchase: Purchase) {
                 style = MaterialTheme.typography.titleMedium
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Sizes.componentSpacing))
 
             Text(
                 text = "Category: ${purchase.category.name}"
@@ -60,7 +58,7 @@ fun PurchaseCard(purchase: Purchase) {
                 )
 
                 Text(
-                    text = formattedValue,
+                    text = purchase.value.toBrazilianCurrency(),
                     style = MaterialTheme.typography.titleSmall,
                     color = Color(0xFFD32F2F)
                 )

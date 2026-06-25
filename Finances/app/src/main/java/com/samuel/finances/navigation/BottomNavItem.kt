@@ -1,4 +1,4 @@
-package com.samuel.finances.model
+package com.samuel.finances.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

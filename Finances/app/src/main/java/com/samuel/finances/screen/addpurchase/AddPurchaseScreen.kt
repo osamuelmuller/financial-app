@@ -11,22 +11,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuel.finances.components.DropdownSelector
-import com.samuel.finances.repository.MockCategoryRepository
-import com.samuel.finances.repository.MockPaymentMethodRepository
 import com.samuel.finances.ui.theme.Sizes
 import com.samuel.finances.viewmodel.AddPurchaseViewModel
 import com.samuel.finances.viewmodel.CategoriesViewModel
 import com.samuel.finances.viewmodel.PaymentMethodViewModel
-import java.time.LocalDate
 
 
 @Composable
@@ -44,10 +36,6 @@ fun AddPurchaseScreen() {
     val getCategories = categoriesViewModel.categories.map {it.name}
 
     val getPaymentMethods = paymentMethodViewModel.paymentMethods.map {it.name}
-
-    var selectedCategory = categoriesViewModel.categories.first().name
-
-    var selectedPaymentMethod = paymentMethodViewModel.paymentMethods.first().name
 
     Column(
         modifier = Modifier
@@ -67,19 +55,15 @@ fun AddPurchaseScreen() {
         DropdownSelector(
             label = "Category",
             items = getCategories,
-            selectedItem = selectedCategory,
-            onItemSelected = {
-                selectedCategory = it
-            }
+            selectedItem = categoriesViewModel.selectedCategory,
+            onItemSelected = { categoriesViewModel.updateCategory(it) }
         )
 
         DropdownSelector(
             label = "Payment Method",
             items = getPaymentMethods,
-            selectedItem = selectedPaymentMethod,
-            onItemSelected = {
-                selectedPaymentMethod = it
-            }
+            selectedItem = paymentMethodViewModel.selectedPaymentMethod,
+            onItemSelected = { paymentMethodViewModel.updatePaymentMethod(it) }
         )
 
         OutlinedTextField(
@@ -102,10 +86,9 @@ fun AddPurchaseScreen() {
                 Text("Value")
             },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions =
-                KeyboardOptions(
+            keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Decimal
-                )
+            )
         )
 
         OutlinedTextField(
@@ -118,8 +101,9 @@ fun AddPurchaseScreen() {
         )
 
         Button(
+            enabled = addPurchaseViewModel.isFormValid,
             onClick = {
-                println("Purchase Saved")
+
             },
             modifier = Modifier.fillMaxWidth()
         ) {

@@ -27,32 +27,23 @@ import com.samuel.finances.repository.MockCategoryRepository
 import com.samuel.finances.repository.MockPaymentMethodRepository
 import com.samuel.finances.repository.MockPurchaseRepository
 import com.samuel.finances.ui.theme.Sizes
+import com.samuel.finances.viewmodel.CategoriesViewModel
+import com.samuel.finances.viewmodel.PaymentMethodViewModel
 import com.samuel.finances.viewmodel.PurchaseHistoryViewModel
 
 @Composable
 fun PurchaseHistoryScreen() {
-    val viewModel : PurchaseHistoryViewModel = viewModel()
-    val purchases = viewModel.purchases
+    val purchaseHistoryViewModel: PurchaseHistoryViewModel = viewModel()
+    val categoriesViewModel: CategoriesViewModel = viewModel()
+    val paymentMethodViewModel: PaymentMethodViewModel = viewModel()
 
     val categories = listOf(
         "All"
-    ) + MockCategoryRepository
-        .getCategories()
-        .map { it.name }
+    ) + categoriesViewModel.categories.map { it.name }
 
     val paymentMethods = listOf(
         "All"
-    ) + MockPaymentMethodRepository
-        .getMethods()
-        .map { it.name }
-
-    var selectedCategory by remember {
-        mutableStateOf("All")
-    }
-
-    var selectedPaymentMethod by remember {
-        mutableStateOf("All")
-    }
+    ) + paymentMethodViewModel.paymentMethods.map { it.name }
 
     var selectedDate by remember {
         mutableStateOf("Current Month")
@@ -80,28 +71,35 @@ fun PurchaseHistoryScreen() {
 
         FilterSelection(
             selectedDate = selectedDate,
-            selectedCategory = selectedCategory,
-            selectedPaymentMethod = selectedPaymentMethod,
+            selectedCategory = categoriesViewModel.selectedCategory,
+            selectedPaymentMethod = paymentMethodViewModel.selectedPaymentMethod,
             dateOptions = dateOptions,
             categoryOptions = categories,
             paymentMethodOptions = paymentMethods,
             onDateSelected = {
                 selectedDate = it
             },
-            onCategorySelected = {
-                selectedCategory = it
-            },
-            onPaymentMethodSelected = {
-                selectedPaymentMethod = it
-            }
+            onCategorySelected = { categoriesViewModel.updateCategory(it) },
+            onPaymentMethodSelected = { paymentMethodViewModel.updatePaymentMethod(it) }
         )
 
         Spacer(modifier = Modifier.height(Sizes.spacers))
 
+        if (purchaseHistoryViewModel.purchases.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("No purchases found")
+            }
+
+            return
+        }
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(Sizes.cardSpacing),
         ) {
-            items(purchases) { purchases ->
+            items(purchaseHistoryViewModel.purchases) { purchases ->
                 PurchaseCard(purchase = purchases)
             }
         }
