@@ -23,7 +23,7 @@ fun CategoryCard(category: Category) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = Sizes.cardSpacing),
+            .padding(bottom = Sizes.cardSpacing),
         elevation = CardDefaults.cardElevation(Sizes.cardElevation)
     ) {
         Column(

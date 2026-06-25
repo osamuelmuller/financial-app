@@ -27,7 +27,7 @@ fun PurchaseCard(purchase: Purchase) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = Sizes.cardSpacing),
+            .padding(bottom = Sizes.cardSpacing),
         elevation = CardDefaults.cardElevation(defaultElevation = Sizes.cardElevation)
     ) {
         val formattedValue = NumberFormat
