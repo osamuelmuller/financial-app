@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class UpdateCategoryRequest {
 
     @NotBlank(message = "Category name is required")
-    @Size(max = 100, message = "Category name must have at most 100 characters")
+    @Size(max = 50, message = "Category name cannot exceed 50 characters")
     private String name;
 
     @NotNull(message = "Initial budget is required")

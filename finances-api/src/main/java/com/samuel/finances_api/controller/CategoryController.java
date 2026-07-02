@@ -4,6 +4,7 @@ import com.samuel.finances_api.dto.category.CategoryResponse;
 import com.samuel.finances_api.dto.category.CreateCategoryRequest;
 import com.samuel.finances_api.dto.category.UpdateCategoryRequest;
 import com.samuel.finances_api.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +28,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public CategoryResponse create(@RequestBody CreateCategoryRequest request) {
+    public CategoryResponse create(@Valid @RequestBody CreateCategoryRequest request) {
         return categoryService.create(request);
     }
 
     @PutMapping("/{id}")
-    public CategoryResponse update(@PathVariable Long id, @RequestBody UpdateCategoryRequest request) {
+    public CategoryResponse update(@PathVariable Long id,@Valid @RequestBody UpdateCategoryRequest request) {
         return categoryService.update(id, request);
     }
 

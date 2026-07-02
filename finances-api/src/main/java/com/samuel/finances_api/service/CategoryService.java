@@ -69,7 +69,9 @@ public class CategoryService {
         } else {
             category.setName(request.getName());
             category.setInitialBudget(request.getInitialBudget());
+            categoryRepository.save(category);
         }
+
 
         return new CategoryResponse(
                 category.getId(),

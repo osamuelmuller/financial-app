@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class CreateCategoryRequest {
 
-    @NotBlank(message = "Category name is required.")
-    @Size(min = 100, message = "Category name must have at most 100 characters")
+    @NotBlank(message = "Category name is required")
+    @Size(max = 50, message = "Category name cannot exceed 50 characters")
     private String name;
 
     @NotNull(message = "Initial budget is required.")
