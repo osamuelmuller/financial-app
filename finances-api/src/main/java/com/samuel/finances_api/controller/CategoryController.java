@@ -3,6 +3,8 @@ package com.samuel.finances_api.controller;
 import com.samuel.finances_api.dto.category.CategoryResponse;
 import com.samuel.finances_api.dto.category.CreateCategoryRequest;
 import com.samuel.finances_api.dto.category.UpdateCategoryRequest;
+import com.samuel.finances_api.entity.PaymentMethod;
+import com.samuel.finances_api.repository.PaymentMethodRepository;
 import com.samuel.finances_api.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

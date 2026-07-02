@@ -20,20 +20,17 @@ public class CategoryService {
     public List<CategoryResponse> getAll() {
         List<Category> categories = categoryRepository.findAll();
 
-        return categories.stream()
-                .map(category -> new CategoryResponse(
+        return categories.stream().map(category -> new CategoryResponse(
                         category.getId(),
                         category.getName(),
                         category.getInitialBudget(),
                         category.getRemainingBudget()
-                ))
-                .toList();
+        )).toList();
     }
 
     public CategoryResponse getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Category Not Found"));
+                .orElseThrow(() -> new RuntimeException("Category Not Found"));
 
         return new CategoryResponse(
                 category.getId(),
@@ -61,8 +58,7 @@ public class CategoryService {
 
     public CategoryResponse update(Long id, UpdateCategoryRequest request) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Category not found."));
+                .orElseThrow(() -> new RuntimeException("Category not found."));
 
         if (request.getInitialBudget().compareTo(category.getRemainingBudget()) < 0) {
             throw new RuntimeException("Initial budget must be greater than or equal to the remaining budget");
@@ -83,8 +79,7 @@ public class CategoryService {
 
     public void delete(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Category not found"));
+                .orElseThrow(() -> new RuntimeException("Category not found"));
 
         categoryRepository.delete(category);
     }
